@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+.wrapper {
+    margin-top: 5%;
+    margin-left: 25%;
+}
+
+
+.mainTable tr th:not(:first-child) {
+    background-color: rgb(104, 112, 187);
+    color: white;
+    padding: 12px;
+    border: solid black 1px;
+    width: 110px;
+
+}
+
+.mainTable tr td:not(:first-child) {
+    padding: 4px;
+    border: solid lightgrey 1px;
+    font-size: 16px;
+}
+
+.btnWrapper {
+    margin-top: 3%;
+    margin-left: 25px;
+}
+
+.btns button {
+    color: white;
+    font-size: 15px;
+    width: 120px;
+    height: 35px;
+    background-color: rgb(104, 112, 187);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btns button:focus {
+    outline: none;
+}
+
+.totalWrapper {
+    margin-top: 5px;
+    width: 680px;
+    display: inline-flex;
+    background-color: rgb(104, 112, 187);
+    border-radius: 5px;
+    padding: 0.5%;
+    color: white;
+    vertical-align: middle;
+    
+}
+
+.totalWrapper div:last-child {
+    text-align: right;
+    margin-left: 82%;
+    float: right;
+}
+
+#rowCount {
+    display: inline-flex;
+}
+
+#rowCount div {
+    margin-right: 5px;
+}
+
+#checkCount {
+    display: inline-flex;
+    margin-left: 50px;
+}
+
+#checkCount div {
+    margin-right: 5px;
+}
+/* 
+.counts {
+    display: inline-flex;
+} */
