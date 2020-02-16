@@ -64,20 +64,19 @@ body {
 }
 
 #rowCount {
-    display: inline-flex;
+    display: flex;
 }
 
 #rowCount div {
-    margin-right: 5px;
+    margin-left: 5px;
 }
 
 #checkCount {
-    display: inline-flex;
-    margin-left: 50px;
+    display: flex;
 }
 
 #checkCount div {
-    margin-right: 5px;
+    margin-left: 5px;
 }
 /* 
 .counts {
