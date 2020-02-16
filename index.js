@@ -99,6 +99,13 @@ $(function() {
         totalRow -= $(".check:checked").length
         rowCount(totalRow)
         $(".check:checked").parent().parent().remove()
+
+// re rendering checked boxes count and total sum
+        checkRow = 0
+        checkCount(checkRow)
+
+        sum = 0
+        total(0)
     })
     
 
