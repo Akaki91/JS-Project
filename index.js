@@ -1,7 +1,7 @@
 $(function () {
     // Fetching Elements. We could use both of this methods either with jQuery or Fetch API
 
-    // $.getJSON("https://raw.githubusercontent.com/StrategicFS/Recruitment/master/data.json",  (data) => {
+    // $.getJSON("",  (data) => {
     // });
 
     fetch("https://raw.githubusercontent.com/StrategicFS/Recruitment/master/data.json")
@@ -9,9 +9,9 @@ $(function () {
         .then(data => {
             let i = 0;
             while (i < data.length) {
-                // rendering each element of the table
+                // rendering each element of the table one by one
                 renderTr(data[i]);
-
+                
                 i++;
             }
         })
@@ -19,22 +19,23 @@ $(function () {
             console.log(err);
         });
 
-    // Defining variables
+    // Defining variables which then will modify total sum, total count of rows and total checked rows
 
     var sum = 0;
     var totalRow = 0;
-    var checkRow = 0;
+    var checkedRow = 0;
 
-    // To render tableraws. This is used for initial fetch method as well as when new item is added to the table
+    // Rendering tablerows. This is used during initial fetch method 
+    // when new item is added to the table
 
     function renderTr(obj) {
         let item = [];
         item.push("<td><input type='checkbox' class='check'></>");
-        item.push("<td>" + obj.creditorName + "</td>");
-        item.push("<td>" + obj.firstName + "</td>");
-        item.push("<td>" + obj.lastName + "</td>");
-        item.push("<td style='text-align: right'>" + obj.minPaymentPercentage + ".00% </td>");
-        item.push("<td style='text-align: right'>" + obj.balance + ".00 </td>");
+        item.push("<td class='bckground'>" + obj.creditorName + "</td>");
+        item.push("<td class='bckground'>" + obj.firstName + "</td>");
+        item.push("<td class='bckground'>" + obj.lastName + "</td>");
+        item.push("<td class='bckground' style='text-align: right'>" + obj.minPaymentPercentage + ".00% </td>");
+        item.push("<td class='bckground' style='text-align: right'>" + obj.balance + ".00 </td>");
 
         $("<tr/>", { html: item.join("") }).appendTo(".mainTable");
 
@@ -61,7 +62,7 @@ $(function () {
             clickCount++;
         }
 
-        // when new item is added to the table we re-render the table
+        // on second click new item is added to the table. and re-rendering the table
         else {
             let obj = {};
 
@@ -72,6 +73,7 @@ $(function () {
             $(".inputText").remove();
             renderTr(obj);
 
+            $("#markAll").prop("checked", false)
             clickCount++;
         }
     });
@@ -85,8 +87,8 @@ $(function () {
         $(".check:checked").closest('tr').remove();
 
         // re rendering checked boxes count and total sum
-        checkRow = 0;
-        checkCount(checkRow);
+        checkedRow = 0;
+        checkCount(checkedRow);
 
         sum = 0;
         total(0);
@@ -96,10 +98,15 @@ $(function () {
     // re rendering checked boxes count and summing all the values for total sum
 
     $("#markAll").on("change", () => {
-        if ($("#markAll").prop("checked") === true) {
+        if ($("#markAll").prop("checked")) {
             $(".check").prop("checked", true);
-            checkRow = totalRow;
-            checkCount(checkRow);
+
+            // removing background color after selecting
+            $(".check:checked").closest('tr').children().removeClass('bckground')
+
+            checkedRow = totalRow;
+            checkCount(checkedRow);
+
 
             sum = 0;
             $(".check").each((i, el) => {
@@ -113,8 +120,14 @@ $(function () {
         // unchecking all checkboxes and re rendering checked boxes count and sum to 0
         else {
             $(".check").prop("checked", false);
-            checkRow = 0;
-            checkCount(checkRow);
+
+            // adding background color after de-selecting
+            $(".check").closest('tr').each((i, el) => {
+                $(el).children().not(':first').addClass('bckground')
+            })
+
+            checkedRow = 0;
+            checkCount(checkedRow);
 
             sum = 0;
             total(0);
@@ -125,9 +138,12 @@ $(function () {
     // check row count is incremented and sum is increased by the added element value
 
     $(".mainTable").on("change", ".check", function () {
-        if ($(this).prop("checked") === true) {
-            checkRow++;
-            checkCount(checkRow);
+        if ($(this).prop("checked")) {
+
+            $(this).closest('tr').children().not(':first').removeClass('bckground')
+
+            checkedRow++;
+            checkCount(checkedRow);
 
             sum += Number(
                 $(this).closest('tr').children().last().text()
@@ -135,10 +151,13 @@ $(function () {
             total(sum);
         }
 
-        // decrementing checkrow count and sum by removed item value
+        // decrementing checkedRow count and sum by removed item value
         else {
-            checkRow--;
-            checkCount(checkRow);
+
+            $(this).closest('tr').children().not(':first').addClass('bckground')
+
+            checkedRow--;
+            checkCount(checkedRow);
 
             sum -= Number(
                 $(this).closest('tr').children().last().text()
@@ -152,7 +171,7 @@ $(function () {
         }
     });
 
-    // helper functions to render page and its elements of total row count, checked checkboxs count, and total sum
+    // helper functions to render table elements of total row count, checked checkboxs count, and total sum
 
     function rowCount(num) {
         $("#rowCount").children().last().remove();
@@ -166,6 +185,6 @@ $(function () {
 
     function total(num) {
         $(".totalWrapper").children().last().remove();
-        $(`<div>$${num}.00</div>`).appendTo(".totalWrapper");
+        $(`<div>$${num.toLocaleString()}.00</div>`).appendTo(".totalWrapper");
     }
 });

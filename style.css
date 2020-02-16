@@ -7,7 +7,8 @@ body {
 
 .wrapper {
     margin-top: 5%;
-    margin-left: 25%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 
@@ -29,6 +30,7 @@ body {
 
 .textfield {
     padding: 0;
+    width: 100%;
 }
 
 .btnWrapper {
@@ -52,7 +54,7 @@ body {
 
 .totalWrapper {
     margin-top: 5px;
-    width: 680px;
+    width: 60%;
     display: inline-flex;
     background-color: rgb(104, 112, 187);
     border-radius: 5px;
@@ -80,4 +82,36 @@ body {
 
 #checkCount div {
     margin-left: 5px;
+}
+
+
+.bckground {
+    background-color: lightpink;
+}
+
+@media (max-width: 1200px) {
+    .totalWrapper {
+        width: 98%;
+    }
+}
+
+
+@media (max-width: 600px){
+    .wrapper {
+        margin-left: 0;
+    }
+
+    .mainTable {
+        padding: 20px;
+    }
+
+    .btnWrapper {
+        padding: 20px;
+    }
+
+    .totalWrapper {
+        width: 360px;
+        padding-right: 70px;
+    }
+
 }
